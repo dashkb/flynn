@@ -432,6 +432,53 @@ var Client = createClass({
 		});
 	},
 
+	listProviders: function () {
+		return this.performControllerRequest('GET', {
+			url: '/providers'
+		});
+	},
+
+	listResources: function () {
+		return this.performControllerRequest('GET', {
+			url: '/resources'
+		});
+	},
+
+	provisionResource: function (providerID) {
+		return this.performControllerRequest('POST', {
+			url: '/providers/'+ encodeURIComponent(providerID) +'/resources',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: {
+				config: {}
+			}
+		}).catch(function (args) {
+			var res = args[0];
+			var xhr = args[1];
+			Dispatcher.dispatch({
+				name: 'PROVISION_RESOURCE_FAILED',
+				providerID: providerID,
+				error: res.message || ('Something went wrong ('+ xhr.status +')')
+			});
+		});
+	},
+
+	deleteResource: function (providerID, resourceID) {
+		return this.performControllerRequest('DELETE', {
+			url: '/providers/'+ encodeURIComponent(providerID) +'/resources/'+ resourceID
+		}).catch(function (args) {
+			var res = args[0];
+			var xhr = args[1];
+			Dispatcher.dispatch({
+				name: 'DELETE_RESOURCE_FAILED',
+				providerID: providerID,
+				resourceID: resourceID,
+				error: res.message || ('Something went wrong ('+ xhr.status +')')
+			});
+		});
+	},
+
 	__waitForEvent: function (fn) {
 		var resolve;
 		var promise = new Promise(function (rs) {

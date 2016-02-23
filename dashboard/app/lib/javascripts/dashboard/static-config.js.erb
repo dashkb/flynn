@@ -29,7 +29,32 @@ var StaticConfig = extend({
 
     github-token-gen.png
     github-token-copy.png
+
+    postgres-logo.png
+    redis-logo.png
+    mariadb-logo.png
   ).inject({}) { |memo, name| memo[name] = "/assets/"+ asset_path(name).sub(/\A\.\//, ''); memo }) %>
 }, window.DashboardConfig || {});
+
+StaticConfig.PROVIDER_ATTRS = {
+	postgres: {
+		title: 'PostgreSQL',
+		img: StaticConfig.ASSET_PATHS['postgres-logo.png'],
+		serviceName: 'postgres',
+		discoverdRouteURIEnvKey: 'DATABASE_URL'
+	},
+	redis: {
+		title: 'Redis',
+		img: StaticConfig.ASSET_PATHS['redis-logo.png'],
+		serviceName: 'redis-web',
+		discoverdRouteURIEnvKey: 'REDIS_URL'
+	},
+	mariadb: {
+		title: 'MariaDB',
+		img: StaticConfig.ASSET_PATHS['mariadb-logo.png'],
+		serviceName: 'mariadb',
+		discoverdRouteURIEnvKey: 'DATABASE_URL'
+	}
+};
 
 export default StaticConfig;
