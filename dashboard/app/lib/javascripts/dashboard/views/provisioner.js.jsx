@@ -4,20 +4,7 @@ import ProvidersStore from 'dashboard/stores/providers';
 
 var providersStoreID = 'default';
 
-var providerAttrs = {
-	postgres: {
-		title: 'PostgreSQL',
-		img: Config.ASSET_PATHS['postgres-logo.png']
-	},
-	redis: {
-		title: 'Redis',
-		img: Config.ASSET_PATHS['redis-logo.png']
-	},
-	mariadb: {
-		title: 'MariaDB',
-		img: Config.ASSET_PATHS['mariadb-logo.png']
-	}
-};
+var providerAttrs = Config.PROVIDER_ATTRS;
 
 var Provisioner = React.createClass({
 	displayName: "Views.Providers",

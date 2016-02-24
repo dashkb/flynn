@@ -231,16 +231,6 @@ var Client = createClass({
 		});
 	},
 
-	createAppDatabase: function (data) {
-		return this.performControllerRequest('POST', {
-			url: "/providers/postgres/resources",
-			body: data,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-	},
-
 	createArtifact: function (data) {
 		return this.performControllerRequest('POST', {
 			url: "/artifacts",
@@ -444,15 +434,15 @@ var Client = createClass({
 		});
 	},
 
-	provisionResource: function (providerID) {
+	provisionResource: function (providerID, resourceReq) {
+		resourceReq = resourceReq || {};
+		resourceReq.config = resourceReq.config || {};
 		return this.performControllerRequest('POST', {
 			url: '/providers/'+ encodeURIComponent(providerID) +'/resources',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: {
-				config: {}
-			}
+			body: resourceReq
 		}).catch(function (args) {
 			var res = args[0];
 			var xhr = args[1];
